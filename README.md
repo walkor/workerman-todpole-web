@@ -3,7 +3,7 @@ workerman-todpole
 
 蝌蚪游泳交互程序-虚拟主机版本（静态空间、php、jsp、asp等空间都可以）。即界面html运行在你的虚拟空间上，后端通讯使用的是workerman主机。
 
-[线上DEMO](http://kedou.workerman.net)
+[线上DEMO](http://fmwww.gitee.io/kedou/)
 
 在自己的服务器上安装部署
 ==================
