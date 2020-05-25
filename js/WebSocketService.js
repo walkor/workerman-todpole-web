@@ -3,6 +3,7 @@ var WebSocketService = function (model, webSocket) {
 
     var webSocket = webSocket;
     var model = model;
+    var gouserList = [];
 
     this.hasConnection = false;
 
@@ -122,7 +123,9 @@ var WebSocketService = function (model, webSocket) {
         let regexp = /^(name[:：;；]|我叫)(.+)/i;
         if (regexp.test(msg)) {
             model.userTadpole.name = msg.match(regexp)[2];
-            $.cookie('todpole_name', model.userTadpole.name, {expires: 14});
+            $.cookie('todpole_name', model.userTadpole.name, {
+                expires: 14
+            });
             return;
         }
 
@@ -136,8 +139,57 @@ var WebSocketService = function (model, webSocket) {
             } else {
                 model.userTadpole.sex = -1;
             }
-            $.cookie('todpole_sex', model.userTadpole.sex, {expires: 14});
+            $.cookie('todpole_sex', model.userTadpole.sex, {
+                expires: 14
+            });
             return;
+        }
+
+        regexp = /^跟随?(.+)/i;
+        if (regexp.test(msg)) {
+
+            let _this = this;
+            let gouserByname = msg.match(regexp)[1];
+            console.log(gouserByname);
+
+            var gousergo = setInterval(function () {
+
+                var gouser = queryByName(gouserByname);
+                let xx = /x: ?(.+)y/i;
+                let yy = /y: ?(.+)/i;
+                // console.log(gouser+"-"+xx+"-"+yy);
+                if (gouser != null) {
+                    model.userTadpole.x = parseFloat(gouser.match(xx)[1] - 12);
+                    model.userTadpole.y = parseFloat(gouser.match(yy)[1] - 12);
+                    _this.sendUpdate(model.userTadpole);
+                } else {
+                    clearInterval(gousergo);
+                    app.sendMessage("他跑了！！");
+                }
+
+                gouserList.push(gousergo);
+                // console.log(gouserList);
+
+            }, 10);
+
+            return;
+        }
+
+        regexp = /^(停止|stop)(挂机|跟随)/;
+        if (regexp.test(msg)) {
+
+            let gouserByname = msg.match(regexp)[2];
+            // console.log(gouserByname);
+            if (gouserByname == "挂机" || gouserByname == "跟随") {
+                // console.log(gouserList);
+                gouserList.forEach((item, index) => {
+                    clearInterval(item);
+                })
+                gouserList = [];
+                gousergo = 0;
+                return;
+
+            }
         }
 
         regexp = /^(\d+)[,，](\d+)$/i;
@@ -160,7 +212,9 @@ var WebSocketService = function (model, webSocket) {
             let _this = this;
             let interval = setInterval(function () {
                 model.userTadpole.sex = model.userTadpole.sex ^ 1;
-                $.cookie('todpole_sex', model.userTadpole.sex, {expires: 14});
+                $.cookie('todpole_sex', model.userTadpole.sex, {
+                    expires: 14
+                });
                 _this.sendUpdate(model.userTadpole);
             }, 500);
             setTimeout(function () {
@@ -185,5 +239,24 @@ var WebSocketService = function (model, webSocket) {
         };
 
         webSocket.send(JSON.stringify(sendObj));
+    }
+
+    var queryByName = function (name) {
+        var x;
+        var y;
+        var userid = JSON.stringify(model.tadpoles);
+        userid = JSON.parse(userid);
+
+        for (var j in userid) {
+
+            if (userid[j].name == name || j == name) {
+                x = userid[j].x;
+                y = userid[j].y;
+
+                return "x:" + x + "y:" + y;
+            }
+        }
+
+        return null;
     }
 }

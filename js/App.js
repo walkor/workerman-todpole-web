@@ -206,8 +206,8 @@ var App = function (aSettings, aCanvas) {
     };
 
     app.deliveryTo = function (x, y) {
-        model.userTadpole.x = x;
-        model.userTadpole.y = y;
+        model.userTadpole.x = parseInt(x);
+        model.userTadpole.y = parseInt(y);
         webSocketService.sendUpdate(model.userTadpole);
     }
 

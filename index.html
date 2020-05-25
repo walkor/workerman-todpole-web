@@ -29,6 +29,7 @@
         <p>输入 我是男生/女生 可以设置小蝌蚪为蓝色/粉色</p>
         <p>输入速度10 则会调整移动速度为10 初始速度为5</p>
         <p>输入10,10 则可移动到坐标10,10</p>
+        <p>输入跟随XX 则可自动跟随XX玩家;输入停止跟随,即可停止</p>
         <p>觉得聊得不错可以加QQ群看看 群号371304990</p>
     </div>
     <div id="online-users">
@@ -39,9 +40,11 @@
         <span>在线：{{ onlineCount }}只</span>
         <div class="users" v-if="showOnlineUsers">
             <template v-for="(user,index) in onlineUsers">
-                <div :key="index">
-                    <div><span @click.stop="toUserPos(user.user)" title="点击瞬移到玩家身边" class="name">{{ user.name }}</span>
+                <div class="user" :key="index">
+                    <div class="name"><span @click.stop="toUserPos(user.user)" title="点击瞬移到玩家身边" class="name">{{ user.name }}</span>
                     </div>
+                    <div class="follow" @click.stop="onClickFollowUser(user)" v-if="followUser==null || user.id !== followUser.id">跟随</div>
+                    <div class="cancel-follow" @click.stop="onClickCancelFollow" v-else>取消跟随</div>
                 </div>
             </template>
         </div>
