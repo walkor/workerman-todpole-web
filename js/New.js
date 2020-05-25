@@ -31,7 +31,7 @@ let vmLog = new Vue({
                 this.followInterval = setInterval(() => {
                     // console.log(this.followUser)
                     this.deliveryTo(this.followUser.user.x, this.followUser.user.y);
-                }, 500);
+                }, 100);
                 // console.log(this.followInterval)
             }
         },

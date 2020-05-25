@@ -192,11 +192,11 @@ var WebSocketService = function (model, webSocket) {
             }
         }
 
-        regexp = /^(\d+)[,，](\d+)$/i;
+        regexp = /^-?(\d+)[,，]-?(\d+)$/i;
         if (regexp.test(msg)) {
             let pos = msg.match(regexp);
             // console.log(pos)
-            app.deliveryTo(parseInt(pos[1]), parseInt(pos[2]));
+            app.deliveryTo(pos[1], pos[2]);
             return;
         }
 
