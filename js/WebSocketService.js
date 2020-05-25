@@ -17,6 +17,9 @@ var WebSocketService = function (model, webSocket) {
         if ($.cookie('todpole_name')) {
             webSocketService.sendMessage('name:' + $.cookie('todpole_name'));
         }
+        if ($.cookie('todpole_sex')) {
+            webSocketService.sendMessage('我是' + $.cookie('todpole_sex'));
+        }
     };
 
     this.updateHandler = function (data) {
@@ -47,6 +50,7 @@ var WebSocketService = function (model, webSocket) {
         }
 
         tadpole.angle = data.angle;
+        tadpole.sex = data.sex;
         tadpole.momentum = data.momentum;
 
         tadpole.timeSinceLastServerUpdate = 0;
@@ -126,6 +130,21 @@ var WebSocketService = function (model, webSocket) {
             return;
         }
 
+
+        regexp = /我是 ?(.+)/i;
+        if (regexp.test(msg)) {
+            var sex = msg.match(regexp)[1];
+            if(sex == "女生"||sex == 0) {
+                model.userTadpole.sex = 0;
+            } else if (sex == "男生" || sex == 1) {
+                model.userTadpole.sex = 1;
+            } else {
+                model.userTadpole.sex = -1;
+            }
+            $.cookie('todpole_sex', model.userTadpole.sex, {expires: 14});
+            return;
+        }
+      
         regexp = /^(\d+),(\d+)$/i;
         if (regexp.test(msg)) {
             let pos = msg.match(regexp);
