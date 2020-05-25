@@ -130,6 +130,7 @@ var WebSocketService = function (model, webSocket) {
             return;
         }
 
+
         regexp = /我是 ?(.+)/i;
         if (regexp.test(msg)) {
             var sex = msg.match(regexp)[1];
@@ -143,8 +144,8 @@ var WebSocketService = function (model, webSocket) {
             $.cookie('todpole_sex', model.userTadpole.sex, {expires: 14});
             return;
         }
-
-        regexp = /(\d+),(\d+)/i;
+      
+        regexp = /^(\d+),(\d+)$/i;
         if (regexp.test(msg)) {
             let pos = msg.match(regexp);
             // console.log(pos)
@@ -152,10 +153,11 @@ var WebSocketService = function (model, webSocket) {
             return;
         }
 
-        regexp = /速度(\d+)/i;
+        regexp = /^速度(\d+)$/i;
         if (regexp.test(msg)) {
             let num = msg.match(regexp);
-            app.speed(num[1]);
+            let speed = parseInt(num[1]) > 0 ? parseInt(num[1]) : 1;
+            app.speed(speed);
         }
 
         var sendObj = {
