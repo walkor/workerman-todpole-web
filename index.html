@@ -31,15 +31,33 @@
         <p>输入10,10 则可移动到坐标10,10</p>
         <p>觉得聊得不错可以加QQ群看看 群号371304990</p>
     </div>
+    <div id="online-users">
+        <div class="header">
+            <h3>在线列表</h3>
+            <div @click.stop="toggleOnlineUsers">{{ showOnlineUsersText }}</div>
+        </div>
+        <span>在线：{{ onlineCount }}只</span>
+        <div class="users" v-if="showOnlineUsers">
+            <template v-for="(user,index) in onlineUsers">
+                <div :key="index">
+                    <div><span @click.stop="toUserPos(user.user)" title="点击瞬移到玩家身边" class="name">{{ user.name }}</span>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+    </div>
     <div id="world">
         <div class="header">
-            <h3>世界动态 在线：{{ onlineCount }}</h3>
+            <h3>世界动态</h3>
             <div @click.stop="toggleMessages">{{ showText }}</div>
         </div>
         <div class="logs" ref="messages" v-if="showMessages">
             <template v-for="(message,index) in messages">
                 <div class="message" v-if="message.type === 'message'" :key="index">
-                    <div><span @click.stop="toUserPos(message.user)" title="点击瞬移到玩家身边" class="name">{{ message.user.name }}</span><span title="点击前往" @click.stop="deliveryTo(message.message.x,message.message.y)" class="pos">[{{ message.message.x }},{{ message.message.y }}]</span>: <span class="content">{{ message.message.content }}</span></div>
+                    <div><span @click.stop="toUserPos(message.user)" title="点击瞬移到玩家身边" class="name">{{ message.user.name }}</span><span
+                            title="点击前往" @click.stop="deliveryTo(message.message.x,message.message.y)" class="pos">[{{ message.message.x }},{{ message.message.y }}]</span>:
+                        <span class="content">{{ message.message.content }}</span></div>
                 </div>
             </template>
         </div>
