@@ -8,6 +8,8 @@ let vmLog = new Vue({
         onlineUsers: [],
         model: null,
         showOnlineUsers: true,
+        followUser: null,
+        followInterval: null,
     },
     watch: {
         messages() {
@@ -22,6 +24,31 @@ let vmLog = new Vue({
                 container.scrollTop = scrollHeight
             })
         },
+        followUser(newUser, oldUser) {
+            if (this.followInterval !== null) clearInterval(this.followInterval);
+            if (newUser !== null) {
+                this.followUser = newUser;
+                this.followInterval = setInterval(() => {
+                    // console.log(this.followUser)
+                    this.deliveryTo(this.followUser.user.x, this.followUser.user.y);
+                }, 500);
+                // console.log(this.followInterval)
+            }
+        },
+        onlineUsers(newOnlineUsers, oldOnlineUsers) {
+            if (this.followUser !== null) {
+                let index = newOnlineUsers.findIndex((user) => {
+                    return this.followUser.id === user.id;
+                });
+                // console.log('update onlineUsers')
+                if (index === -1) {
+                    console.log("用户离开，跟随结束")
+                    clearInterval(this.followInterval);
+                    this.followUser = null;
+                    this.followInterval = null;
+                }
+            }
+        }
     },
     computed: {
         showText() {
@@ -58,7 +85,7 @@ let vmLog = new Vue({
 
             //在线用户列表
             let userList = []
-            for (var id in this.users) {
+            for (let id in this.users) {
                 userList.push({
                     id: id,
                     name: this.users[id].name,
@@ -70,11 +97,13 @@ let vmLog = new Vue({
         updateModel(model) {
             this.model = model;
         },
-        speedUp() {
-            this.model.userTadpole.maxMomentum += 1;
+        onClickFollowUser(user) {
+            this.followUser = user;
+            // console.log(user)
         },
-        speedDown() {
-            this.model.userTadpole.maxMomentum -= 1;
-        },
+        onClickCancelFollow() {
+            this.followUser = null;
+            clearInterval(this.followInterval);
+        }
     }
 });

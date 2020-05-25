@@ -388,8 +388,8 @@ a#force-init-button:hover {
     padding: 10px;
     width: 20vw;
     position: absolute;
-    top: 215px;
-    right: 60px;
+    left: 60px;
+    bottom: 30px;
     color: white;
     z-index: 99;
     background: rgba(0, 0, 0, .3);
@@ -439,4 +439,29 @@ a#force-init-button:hover {
 #online-users .users .name:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.users > .user {
+    display: flex;
+    padding: 5px 0;
+}
+
+.users > .user .name {
+    flex: 1;
+}
+
+.users > .user .follow {
+    display: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .5);
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.users > .user .cancel-follow {
+    cursor: pointer;
+}
+
+.users > .user:hover .follow {
+    display: block;
 }

@@ -40,9 +40,11 @@
         <span>在线：{{ onlineCount }}只</span>
         <div class="users" v-if="showOnlineUsers">
             <template v-for="(user,index) in onlineUsers">
-                <div :key="index">
-                    <div><span @click.stop="toUserPos(user.user)" title="点击瞬移到玩家身边" class="name">{{ user.name }}</span>
+                <div class="user" :key="index">
+                    <div class="name"><span @click.stop="toUserPos(user.user)" title="点击瞬移到玩家身边" class="name">{{ user.name }}</span>
                     </div>
+                    <div class="follow" @click.stop="onClickFollowUser(user)" v-if="followUser==null || user.id !== followUser.id">跟随</div>
+                    <div class="cancel-follow" @click.stop="onClickCancelFollow" v-else>取消跟随</div>
                 </div>
             </template>
         </div>

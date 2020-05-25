@@ -242,7 +242,6 @@ var WebSocketService = function (model, webSocket) {
     }
 
     var queryByName = function (name) {
-
         var x;
         var y;
         var userid = JSON.stringify(model.tadpoles);
