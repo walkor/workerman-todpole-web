@@ -75,6 +75,7 @@ var WebSocketService = function (model, webSocket) {
         if (model.tadpoles[data.id]) {
             delete model.tadpoles[data.id];
             delete model.arrows[data.id];
+            vmLog.updateUsers(model.tadpoles);
         }
     }
 
