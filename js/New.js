@@ -11,6 +11,11 @@ let vmLog = new Vue({
         followUser: null,
         followInterval: null,
     },
+    filters: {
+        parseInt: function (value) {
+            return parseInt(value);
+        }
+    },
     watch: {
         messages() {
             this.$nextTick(() => {

@@ -441,6 +441,10 @@ a#force-init-button:hover {
     text-decoration: underline;
 }
 
+#online-users .users .user .pos {
+    color: #999;
+}
+
 .users > .user {
     display: flex;
     padding: 5px 0;
