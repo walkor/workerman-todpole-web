@@ -96,7 +96,7 @@ h1 {
     /*background: url(images/logo.png);*/
     overflow: hidden;
     color: white;
-    font-size: 40px;
+    font-size: 2rem;
 }
 
 h2 {
@@ -334,7 +334,7 @@ a#force-init-button:hover {
 }
 
 #world > .logs::-webkit-scrollbar {
-    width: 4px;  
+    width: 4px;
 	height: 4px;
 	scrollbar-arrow-color:#fff;
 }
