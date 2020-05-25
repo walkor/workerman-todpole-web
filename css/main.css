@@ -334,22 +334,22 @@ a#force-init-button:hover {
 }
 
 #world > .logs::-webkit-scrollbar {
-    width: 4px;  
-	height: 4px;
-	scrollbar-arrow-color:#fff;
+    width: 4px;
+    height: 4px;
+    scrollbar-arrow-color: #fff;
 }
 
 #world > .logs::-webkit-scrollbar-thumb {
     border-radius: 5px;
-	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-	background: rgba(255, 255, 255, 0.2);
-	scrollbar-arrow-color:red;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    scrollbar-arrow-color: red;
 }
 
 #world > .logs::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-	border-radius: 0;
-	background: rgba(255, 255, 255, 0.1);
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 #world > .logs > .message {
@@ -367,17 +367,60 @@ a#force-init-button:hover {
     font-size: 1.3em;
 }
 
-#world > .logs > .message .name:hover {
-    cursor: pointer;
-    text-decoration: underline;
+#online-users {
+    border-radius: 10px;
+    padding: 10px;
+    width: 20vw;
+    position: absolute;
+    top: 200px;
+    right: 60px;
+    color: white;
+    z-index: 99;
+    background: rgba(0, 0, 0, .3);
 }
 
-#world > .logs > .message .pos {
-    color: #999;
+#online-users > .header {
+    display: flex;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+#online-users > .header > h3 {
+    flex: 1;
+}
+
+#online-users > span {
     font-size: 1.3em;
+    color: #999999;
+    display: inline-block;
 }
 
-#world > .logs > .message .pos:hover {
-    text-decoration: underline;
+#online-users > .users {
+    max-height: 200px;
+    font-size: 1.4em;
+    overflow: scroll;
+}
+
+#online-users > .users::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    scrollbar-arrow-color: #fff;
+}
+
+#online-users > .users::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    scrollbar-arrow-color: red;
+}
+
+#online-users > .users::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#online-users .users .name:hover {
     cursor: pointer;
+    text-decoration: underline;
 }

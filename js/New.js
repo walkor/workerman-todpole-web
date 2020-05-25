@@ -1,11 +1,13 @@
 let vmLog = new Vue({
-    el: '#world',
+    el: '#ui',
     data: {
         messages: [],
         showMessages: true,
         users: null,
         onlineCount: 0,
+        onlineUsers: [],
         model: null,
+        showOnlineUsers: true,
     },
     watch: {
         messages() {
@@ -25,6 +27,9 @@ let vmLog = new Vue({
         showText() {
             return this.showMessages ? '隐藏' : '显示';
         },
+        showOnlineUsersText() {
+            return this.showOnlineUsers ? '隐藏' : '显示';
+        }
     },
     methods: {
         addLog(user, message) {
@@ -37,6 +42,9 @@ let vmLog = new Vue({
         toggleMessages() {
             this.showMessages = !this.showMessages;
         },
+        toggleOnlineUsers() {
+            this.showOnlineUsers = !this.showOnlineUsers;
+        },
         deliveryTo(x, y) {
             // console.log(x, y, app)
             app.deliveryTo(x, y);
@@ -47,6 +55,17 @@ let vmLog = new Vue({
         updateUsers(users) {
             this.users = users;
             this.onlineCount = this.users ? Object.keys(this.users).length : 0;
+
+            //在线用户列表
+            let userList = []
+            for (var id in this.users) {
+                userList.push({
+                    id: id,
+                    name: this.users[id].name,
+                    user: this.users[id]
+                })
+            }
+            this.onlineUsers = userList
         },
         updateModel(model) {
             this.model = model;

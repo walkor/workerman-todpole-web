@@ -7,12 +7,12 @@ var Tadpole = function () {
 
 	this.name = '';
 	this.age = 0;
-	this.sex = 1;
+	this.sex = -1;
 
 	this.hover = false;
 
 	this.momentum = 0;
-	this.maxMomentum = 3;
+	this.maxMomentum = 5;
 	this.angle = Math.PI * 2;
 
 	this.targetX = 0;
@@ -125,7 +125,7 @@ var Tadpole = function () {
 			context.fillStyle = 'rgba(255, 181, 197,' + opacity + ')';
 		} else if (tadpole.sex == 1) {
 			context.fillStyle = 'rgba(192, 253, 247,' + opacity + ')';
-		} 
+		}
 
 		context.shadowOffsetX = 0;
 		context.shadowOffsetY = 0;
