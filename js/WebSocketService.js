@@ -106,7 +106,8 @@ var WebSocketService = function (model, webSocket) {
             x: tadpole.x.toFixed(1),
             y: tadpole.y.toFixed(1),
             angle: tadpole.angle.toFixed(3),
-            momentum: tadpole.momentum.toFixed(3)
+            momentum: tadpole.momentum.toFixed(3),
+            sex: tadpole.sex
         };
 
         if (tadpole.name) {
@@ -117,26 +118,19 @@ var WebSocketService = function (model, webSocket) {
     }
 
     this.sendMessage = function (msg) {
-        var regexp = /name: ?(.+)/i;
+        let regexp = /^(name[:：;；]|我叫)(.+)/i;
         if (regexp.test(msg)) {
-            model.userTadpole.name = msg.match(regexp)[1];
-            $.cookie('todpole_name', model.userTadpole.name, {expires: 14});
-            return;
-        }
-        regexp = /我叫 ?(.+)/i;
-        if (regexp.test(msg)) {
-            model.userTadpole.name = msg.match(regexp)[1];
+            model.userTadpole.name = msg.match(regexp)[2];
             $.cookie('todpole_name', model.userTadpole.name, {expires: 14});
             return;
         }
 
-
-        regexp = /我是 ?(.+)/i;
+        regexp = /^(我是|sex)(男生|女生|0|1|男|女)/;
         if (regexp.test(msg)) {
-            var sex = msg.match(regexp)[1];
-            if(sex == "女生"||sex == 0) {
+            let sex = msg.match(regexp)[2];
+            if (sex === "女生" || sex === '0') {
                 model.userTadpole.sex = 0;
-            } else if (sex == "男生" || sex == 1) {
+            } else if (sex === "男生" || sex === '1') {
                 model.userTadpole.sex = 1;
             } else {
                 model.userTadpole.sex = -1;
@@ -144,8 +138,8 @@ var WebSocketService = function (model, webSocket) {
             $.cookie('todpole_sex', model.userTadpole.sex, {expires: 14});
             return;
         }
-      
-        regexp = /^(\d+),(\d+)$/i;
+
+        regexp = /^(\d+)[,，](\d+)$/i;
         if (regexp.test(msg)) {
             let pos = msg.match(regexp);
             // console.log(pos)
@@ -158,6 +152,20 @@ var WebSocketService = function (model, webSocket) {
             let num = msg.match(regexp);
             let speed = parseInt(num[1]) > 0 ? parseInt(num[1]) : 1;
             app.speed(speed);
+        }
+
+        regexp = /^flicker$/;
+        if (regexp.test(msg)) {
+            let _this = this;
+            let interval = setInterval(function () {
+                model.userTadpole.sex = model.userTadpole.sex ^ 1;
+                $.cookie('todpole_sex', model.userTadpole.sex, {expires: 14});
+                _this.sendUpdate(model.userTadpole);
+            }, 500);
+            setTimeout(function () {
+                clearInterval(interval);
+            }, 60000);
+            return;
         }
 
         var sendObj = {
