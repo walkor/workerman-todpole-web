@@ -145,7 +145,7 @@ var WebSocketService = function (model, webSocket) {
             return;
         }
 
-        regexp = /^跟随?(.+)/i;
+        regexp = /^跟随(.+)/i;
         if (regexp.test(msg)) {
 
             let _this = this;
