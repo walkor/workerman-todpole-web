@@ -25,19 +25,19 @@
     <div id="instructions">
         <h2>介绍</h2>
         <p>直接打字聊天!<br/>输入 我叫XX 则会设置你的昵称为XX</p>
-        <p>输入速度10 则会调整移动速度为10</p>
+        <p>输入速度10 则会调整移动速度为10 初始速度为5</p>
         <p>输入10,10 则可移动到坐标10,10</p>
         <p>觉得聊得不错可以加QQ群看看 群号371304990</p>
     </div>
     <div id="world">
         <div class="header">
             <h3>世界动态 在线：{{ onlineCount }}</h3>
-            <div @click="toggleMessages">{{ showText }}</div>
+            <div @click.stop="toggleMessages">{{ showText }}</div>
         </div>
         <div class="logs" ref="messages" v-if="showMessages">
             <template v-for="(message,index) in messages">
                 <div class="message" v-if="message.type === 'message'" :key="index">
-                    <div><span @click="toUserPos(message.user)" title="点击瞬移到玩家身边" class="name">{{ message.user.name }}</span><span title="点击前往" @click="deliveryTo(message.message.x,message.message.y)" class="pos">[{{ message.message.x }},{{ message.message.y }}]</span>: <span class="content">{{ message.message.content }}</span></div>
+                    <div><span @click.stop="toUserPos(message.user)" title="点击瞬移到玩家身边" class="name">{{ message.user.name }}</span><span title="点击前往" @click.stop="deliveryTo(message.message.x,message.message.y)" class="pos">[{{ message.message.x }},{{ message.message.y }}]</span>: <span class="content">{{ message.message.content }}</span></div>
                 </div>
             </template>
         </div>
