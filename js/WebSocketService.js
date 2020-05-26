@@ -209,16 +209,23 @@ var WebSocketService = function (model, webSocket) {
 
         regexp = /^flicker$/;
         if (regexp.test(msg)) {
-            let _this = this;
-            let interval = setInterval(function () {
+            let sex = model.userTadpole.sex;
+            let interval = setInterval(() => {
+                if (model.userTadpole.sex === -1) {
+                    model.userTadpole.sex = 1;
+                }
                 model.userTadpole.sex = model.userTadpole.sex ^ 1;
                 $.cookie('todpole_sex', model.userTadpole.sex, {
                     expires: 14
                 });
-                _this.sendUpdate(model.userTadpole);
+                this.sendUpdate(model.userTadpole);
             }, 500);
             setTimeout(function () {
                 clearInterval(interval);
+                model.userTadpole.sex = sex;
+                $.cookie('todpole_sex', model.userTadpole.sex, {
+                    expires: 14
+                });
             }, 60000);
             return;
         }
