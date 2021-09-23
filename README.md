@@ -12,7 +12,7 @@ workerman-todpole
 
 2、浏览器访问地址  虚拟主机域名或者ip 如图：
 
-![小蝌蚪游戏截图](https://github.com/walkor/workerman-todpole/blob/master/applications/Todpole/Web/images/workerman-todpole-browser.png?raw=true)
+![小蝌蚪游戏截图](https://raw.githubusercontent.com/walkor/workerman-todpole/master/Applications/Todpole/Web/images/workerman-todpole-browser.png)
 
 
 请在界面上保留作者链接信息
